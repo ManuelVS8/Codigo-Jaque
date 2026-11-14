@@ -558,7 +558,7 @@ body>.fantasma{position:fixed!important;z-index:9999;pointer-events:none;opacity
 .rosa-b .fl{font-size:1.6rem}
 .rosa-b small{font-size:.58rem;line-height:1;font-weight:600;margin-top:-1px}
 .rosa5 .rosa-b{border-radius:10px!important}
-.rosa5 .rosa-b svg{width:92%;height:92%}
+.rosa5 .rosa-b svg{width:74%;height:74%}
 .rosa-centro{display:grid;place-items:center;aspect-ratio:1;background:rgba(255,255,255,.75);border-radius:14px;border:2px dashed #cfc8f5}
 .rosa-centro img{width:88%;height:88%}
 .paleta .ctrl{display:flex;flex-direction:column;gap:12px}
@@ -1734,9 +1734,11 @@ function imgPieza(t,negra,px){
 }
 // icono de un salto del caballo (una L)
 function icoSalto(j){
-  // la L centrada: sale del punto pequeño y llega al punto grande
-  const x=KX[j], y=KY[j], ox=-x/2, oy=-y/2, p=Math.abs(y)===2?`M${ox} ${oy}V${y+oy}H${x+ox}`:`M${ox} ${oy}H${x+ox}V${y+oy}`;
-  return `<svg viewBox="-1.75 -1.75 3.5 3.5"><path d="${p}" fill="none" stroke="currentColor" stroke-width=".42" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${x+ox}" cy="${y+oy}" r=".5" fill="currentColor"/><circle cx="${ox}" cy="${oy}" r=".3" fill="currentColor" opacity=".6"/></svg>`;
+  // flecha que sale del caballo (centro) y apunta a la casilla donde cae
+  const x=KX[j], y=KY[j], l=Math.hypot(x,y), ux=x/l, uy=y/l, px=-uy, py=ux, f=n=>n.toFixed(3);
+  const a=[-.62*ux,-.62*uy], b=[.38*ux,.38*uy], t=[.92*ux,.92*uy], w=.36;
+  const h1=[b[0]+px*w,b[1]+py*w], h2=[b[0]-px*w,b[1]-py*w];
+  return `<svg viewBox="-1.15 -1.15 2.3 2.3"><path d="M${f(a[0])} ${f(a[1])}L${f(b[0])} ${f(b[1])}" stroke="currentColor" stroke-width=".26" stroke-linecap="round"/><path d="M${f(t[0])} ${f(t[1])}L${f(h1[0])} ${f(h1[1])}L${f(h2[0])} ${f(h2[1])}Z" fill="currentColor" stroke="currentColor" stroke-width=".08" stroke-linejoin="round"/></svg>`;
 }
 
 /* =========================================================
@@ -2415,7 +2417,7 @@ const INTRO = {
   4:()=>modal({titulo:'Mundo 4: el Caballo',robot:'sorpresa',cancelable:true,
     html:`<div class="intro-pz">${piezaMini('C')}</div><p>El caballo salta en forma de <b>L</b>: 2 casillas en una dirección y 1 hacia un lado. Tiene <b>8 saltos</b> posibles.</p>
       <p>Es la única pieza que <b>salta por encima</b> de las demás. Solo importa la casilla donde cae: tiene que estar libre.</p>
-      <p>En la caja verás los 8 saltos alrededor del caballo: toca el que quieras.</p>`,
+      <p>En la caja, el caballo está en el centro y sus <b>8 saltos</b> lo rodean: cada flecha está en la casilla donde cae y apunta hacia ella. Toca la casilla a la que quieres saltar.</p>`,
     botones:[{txt:'¡A saltar!',cls:'btn-ok'}]}),
   5:()=>modal({titulo:'Mundo 5: el Rey y el Peón',robot:'sorpresa',cancelable:true,
     html:`<div class="intro-pz">${piezaMini('R')} ${piezaMini('P')}</div><p>El <b>rey</b> va en cualquier dirección, pero <b>solo una casilla</b>. Nunca puede pisar una casilla <b>amenazada</b> 🔴 (la que ataca una pieza negra).</p>
@@ -2445,7 +2447,7 @@ const BIB=[
  {w:1,tit:'Mover en línea recta',pz:'T',txt:'La torre va arriba, abajo, a la izquierda o a la derecha. Con <b>+</b> y <b>−</b> eliges cuántas casillas.',ej:()=>bh(mov(2,3),LT)},
  {w:2,tit:'Mover en diagonal',pz:'A',txt:'El alfil va en diagonal (↗ ↘ ↙ ↖). Siempre se queda en casillas del mismo color.',ej:()=>bh(mov(1,2),LA)},
  {w:3,t:'REP',txt:'Repite lo que metas dentro tantas veces como indiques. Para escaleras y zigzags.',ej:()=>contEj('REP','<span>Repetir</span><span class="veces"><b>3</b></span><span>veces</span>',bh(mov(0,1),LT)+bh(mov(2,1),LT))},
- {w:4,tit:'Saltar en L',pz:'C',txt:'El caballo salta 2 casillas en una dirección y 1 hacia un lado. Pasa por encima de cualquier pieza.',ej:()=>bh(sal(1),{pieza:'C'})},
+ {w:4,tit:'Saltar en L',pz:'C',txt:'El caballo salta 2 casillas en una dirección y 1 hacia un lado. Pasa por encima de cualquier pieza. En la caja, cada flecha apunta a la casilla donde cae.',ej:()=>bh(sal(1),{pieza:'C'})},
  {w:5,tit:'El rey',pz:'R',txt:'Una sola casilla, en cualquier dirección. Nunca a una casilla amenazada 🔴.',ej:()=>bh(mov(1,1),LR)},
  {w:5,i:2,tit:'El peón',pz:'P',txt:'Avanza ↑ (2 casillas solo la primera vez) y captura en diagonal (↖ ↗). En la fila 8 corona 👑.',ej:()=>bh(mov(0,2),LP)+bh(cap(1),LP)},
  {w:6,t:'IF',txt:'El rey mira la casilla que elijas: lo de dentro solo se hace <b>si está amenazada</b> 🔴.',ej:()=>contEj('IF','<span class="etq">Si hay peligro en</span>'+miniRosaEj(0),bh(mov(1,1),LR)+bh(mov(7,1),LR),130)},
@@ -2558,7 +2560,7 @@ function htmlPaleta(lab,M){
     const ds=PIEZAS[p].dirs;
     rosa=`<div class="rosa">${[7,0,1,6,-1,2,5,4,3].map(d=>d<0?centro:ds.includes(d)?celda(d):'<i></i>').join('')}</div>`;
   }
-  const leyenda=p==='C'?'Toca un salto':p==='P'?'↑ avanza · ↖ ↗ capturan':p==='R'?'Una casilla':'Dirección y casillas';
+  const leyenda=p==='C'?'Toca la casilla donde quieres caer':p==='P'?'↑ avanza · ↖ ↗ capturan':p==='R'?'Una casilla':'Dirección y casillas';
   return `<div class="rosa-tit">${piezaMini(p)} <b>${nombrePieza(p)}</b> <small>${leyenda}</small></div>${rosa}
     ${M.ctrl.length?`<div class="ctrl">${M.ctrl.map(t=>`<button class="blk b-${t}" data-acc="add" data-t="${t}" title="${LARGO[t]}"><span class="ico">${ICO[t]}</span><span>${NOM_CTRL[t]}</span><span class="tecla">${TECLA[t]}</span></button>`).join('')}</div>`:''}`;
 }
