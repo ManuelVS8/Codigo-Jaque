@@ -1,0 +1,18 @@
+CÓDIGO JAQUE · cómo publicarlo
+==============================
+1. Crea el repositorio «Codigo-Jaque» en GitHub (ManuelVS8) y sube TODO el contenido
+   de esta carpeta, con la carpeta «iconos» incluida.
+2. Settings > Pages > Deploy from a branch > main / (root).
+3. Firebase (proyecto «codigo-siurot», el mismo de Código Siurot):
+   Firestore Database > Reglas > pega el contenido de firestore.rules > Publicar.
+   SÍ HAY QUE REPUBLICARLAS. Sin ellas el juego funciona, pero no guarda el progreso en la nube.
+4. Firebase > Authentication > Configuración > Dominios autorizados:
+   manuelvs8.github.io ya está (es el de Código Siurot). Si usas otro dominio, añádelo.
+5. Comprueba la instalación abriendo: .../Codigo-Jaque/index.html?diag
+   (deben salir ✅ manifest.json, sw.js, icon-192 e icon-512).
+
+Alumnado: entra con el mismo usuario y la misma clave de Código Siurot.
+Administración: .../Codigo-Jaque/admin.html (gestiona los dos juegos).
+Modo demo para el profesorado: .../Codigo-Jaque/index.html?demo (todo desbloqueado, botón «Solución», no guarda en la nube).
+Haz las bajas y los cambios de clase desde ESTE admin: borra y mueve también el Salón de la fama de Código Jaque.
+Piezas de ajedrez: «cburnett» de Colin M. L. Burnett (GPL v2 o posterior), las de Lichess.
