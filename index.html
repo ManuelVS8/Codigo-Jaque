@@ -936,19 +936,19 @@ const MUNDOS = [
   {id:5, nombre:'Rey y peón', pieza:'R', concepto:'Un paso cada vez', tema:'ciudad', mc1:'#c3d4ff', mc2:'#5b7cfa', mD:'#2e44b8', ctrl:['REP'],
    aprende:'El rey va de una en una y nunca entra en una casilla amenazada. El peón avanza y captura en diagonal.',
    intro:'Soy el rey: me muevo una sola casilla, hacia donde quiera. ¡Nunca me pongo en una casilla amenazada 🔴!'},
-  {id:6, nombre:'Si hay peligro', pieza:'R', concepto:'«Si…» y «Repetir hasta llegar»', tema:'volcan', mc1:'#ffc08a', mc2:'#ef5b2a', mD:'#a3290d', ctrl:['REP','UNT','IF'],
+  {id:6, nombre:'La Dama', pieza:'D', concepto:'Capturar en orden', tema:'galaxia', mc1:'#c9b6ff', mc2:'#6d3fe0', mD:'#3b1f94', ctrl:['REP'],
+   aprende:'Mover la dama (recto y en diagonal) y capturar las piezas de menor a mayor valor: ♟1 · ♞♝3 · ♜5 · ♛9.',
+   intro:'¡Soy la dama, la pieza más poderosa! Captura las piezas negras de menor a mayor valor.'},
+  {id:7, nombre:'Si hay peligro', pieza:'R', concepto:'«Si…» y «Repetir hasta llegar»', tema:'volcan', mc1:'#ffc08a', mc2:'#ef5b2a', mD:'#a3290d', ctrl:['REP','UNT','IF'],
    aprende:'Decidir: «Si la casilla de delante está en peligro → rodéala». Y repetir sin contar hasta llegar.',
    intro:'Con «Si» miro antes de moverme: si hay peligro, lo rodeo. Junto a «Repetir hasta llegar», un solo programa sirve para todo el camino.'},
-  {id:7, nombre:'Mi bloque', pieza:'C', concepto:'Crea tu propio bloque', tema:'oceano', mc1:'#a6f0ff', mc2:'#0ea5c6', mD:'#0b6480', ctrl:['REP','FN'],
+  {id:8, nombre:'Mi bloque', pieza:'C', concepto:'Crea tu propio bloque', tema:'oceano', mc1:'#a6f0ff', mc2:'#0ea5c6', mD:'#0b6480', ctrl:['REP','FN'],
    aprende:'Inventar tu propio bloque («Mi bloque») con un trozo del recorrido y usarlo muchas veces.',
-   intro:'Hay un trozo del recorrido que aparece varias veces. Guárdalo una vez en «Mi bloque» y úsalo siempre que salga.'},
-  {id:8, nombre:'La Dama', pieza:'D', concepto:'Capturar en orden', tema:'galaxia', mc1:'#c9b6ff', mc2:'#6d3fe0', mD:'#3b1f94', ctrl:['REP','UNT','FN'],
-   aprende:'Mover la dama (recto y en diagonal) y capturar las piezas de menor a mayor valor: ♟1 · ♞♝3 · ♜5 · ♛9.',
-   intro:'¡Soy la dama, la pieza más poderosa! Captura las piezas negras de menor a mayor valor. Vale todo lo aprendido.'}
+   intro:'Hay un trozo del recorrido que aparece varias veces. Guárdalo una vez en «Mi bloque» y úsalo siempre que salga.'}
 ];
 const NIVELES = MUNDOS;
 // bloque nuevo de cada mundo: para ★★★ hay que usarlo
-const BLOQUE_CLAVE = {3:'REP', 6:'IF', 7:'FN'};
+const BLOQUE_CLAVE = {3:'REP', 7:'IF', 8:'FN'};
 const NOM_CLAVE = {REP:'«Repetir»', IF:'«Si»', UNT:'«Repetir hasta llegar»', FN:'«Mi bloque»'};
 const CONTENEDOR = {REP:1, IF:1, UNT:1};
 const MAX_ANIDADO = 3;
@@ -1237,13 +1237,13 @@ const ESPEC = {
   4:[{g:'alc',pieza:'C',L:[1,1],sinRep:true},{g:'alc',pieza:'C',L:[2,2],sinRep:true},{g:'alc',pieza:'C',L:[2,2],bloq:[8,12]},{g:'alc',pieza:'C',L:[3,3],bloq:[5,9]},{g:'alc',pieza:'C',wps:2,L:[4,4],bloq:[3,6]}],
   5:[{g:'alc',pieza:'R',L:[3,3],dmax:3,sinRep:true},{g:'alc',pieza:'R',L:[4,4],dmax:4,neg:[1,2],cheb:true,sinRep:true},{g:'peon',c:[1,1],bloq:[1,2],L:[3,5]},
      {g:'alc',pieza:'R',L:[5,6],dmax:5,neg:[2,3],cheb:true},{g:'peon',c:[2,3],bloq:[2,3],L:[4,6]}],
-  6:[{g:'pel',len:[6,7],nt:[2,2],D:[0],S:[1]},{g:'pel',len:[7,7],nt:[2,2],D:[0],S:[-1]},{g:'pel',len:[6,7],nt:[2,2],D:[4]},{g:'pel',len:[7,7],nt:[2,2]},{g:'pel',len:[7,7],nt:[2,2]}],
-  7:[{g:'pat',fn:true,pieza:'T',motivo:MOTIVOS,usos:3,con:[1,1],ahorro:2},
-     {g:'pat',fn:true,pieza:'A',motivo:MOTIVOS,usos:3,con:[1,1],ahorro:2},
+  7:[{g:'pel',len:[6,7],nt:[2,2],D:[0],S:[1]},{g:'pel',len:[7,7],nt:[2,2],D:[0],S:[-1]},{g:'pel',len:[6,7],nt:[2,2],D:[4]},{g:'pel',len:[7,7],nt:[2,2]},{g:'pel',len:[7,7],nt:[2,2]}],
+  8:[{g:'pat',fn:true,pieza:'T',motivo:MOTIVOS,usos:2,con:[1,1],ahorro:1},
+     {g:'pat',fn:true,pieza:'A',motivo:MOTIVOS,usos:2,con:[1,1],ahorro:1},
      {g:'pat',fn:true,pieza:'C',motivo:{C:MOTIVOS.C.filter(m=>m.length===2)},usos:3,con:[1,1],ahorro:1},
-     {g:'pat',fn:true,pieza:'C',m:2,usos:4,con:[1,1],ahorro:2},
+     {g:'pat',fn:true,pieza:'T',motivo:MOTIVOS,usos:3,con:[1,1],ahorro:2},
      {g:'pat',fn:true,pieza:'C',m:3,usos:3,con:[1,1],ahorro:2}],
-  8:[{g:'cap',n:2,bloq:[0,0],L:[2,2],sinRep:true},{g:'cap',n:3,bloq:[0,2],L:[3,3]},{g:'cap',n:3,bloq:[3,6],L:[4,4]},{g:'cap',n:4,bloq:[0,3],L:[4,5]},{g:'cap',n:4,bloq:[4,7],L:[5,6]}]
+  6:[{g:'cap',n:2,bloq:[0,0],L:[2,2],sinRep:true},{g:'cap',n:3,bloq:[0,2],L:[3,3]},{g:'cap',n:3,bloq:[3,6],L:[4,4]},{g:'cap',n:4,bloq:[0,3],L:[4,5]},{g:'cap',n:4,bloq:[4,7],L:[5,6]}]
 };
 function espInfinito(n,rnd){
   if(n===1) return elegir(rnd,[{g:'alc',pieza:'T',L:[2,3],bloq:[2,7]},{g:'alc',pieza:'T',wps:rint(rnd,2,3),L:[3,5],bloq:[0,5]}]);
@@ -1251,9 +1251,9 @@ function espInfinito(n,rnd){
   if(n===3){ const P=elegir(rnd,['T','A']); return {g:'pat',pieza:P,pats:PATS,k:[2,4],pre:[0,1],suf:[0,1],parMax:6}; }
   if(n===4) return elegir(rnd,[{g:'alc',pieza:'C',L:[2,3],bloq:[3,10]},{g:'alc',pieza:'C',wps:2,L:[3,4],bloq:[2,6]}]);
   if(n===5) return elegir(rnd,[{g:'alc',pieza:'R',L:[4,6],dmax:5,neg:[1,3],cheb:true},{g:'peon',c:[1,3],bloq:[1,3],L:[3,6]}]);
-  if(n===6) return {g:'pel',len:[6,7],nt:[2,2]};
-  if(n===7) return elegir(rnd,[{g:'pat',fn:true,pieza:['T','A'],motivo:MOTIVOS,usos:3,con:[1,1],ahorro:2},{g:'pat',fn:true,pieza:'C',motivo:MOTIVOS,usos:3,con:[1,1],ahorro:1}]);
-  return {g:'cap',n:rint(rnd,3,4),bloq:[1,6],L:[3,6]};
+  if(n===6) return {g:'cap',n:rint(rnd,3,4),bloq:[1,6],L:[3,6]};
+  if(n===7) return {g:'pel',len:[6,7],nt:[2,2]};
+  if(n===8) return elegir(rnd,[{g:'pat',fn:true,pieza:['T','A'],motivo:MOTIVOS,usos:3,con:[1,1],ahorro:2},{g:'pat',fn:true,pieza:'C',motivo:MOTIVOS,usos:3,con:[1,1],ahorro:1}]);
 }
 const GEN = {alc:genAlcanzar, cap:genCaptura, pat:genPatron, peon:genPeon, pel:genPeligro};
 // idx >= 0: reto fijo; idx = -1: reto aleatorio del modo infinito
@@ -2059,7 +2059,7 @@ function imagenLab(lab,tema,w,h){
 const _vistas={};
 function vistaMundo(m){
   if(_vistas[m.id]) return _vistas[m.id];
-  return _vistas[m.id]=imagenLab(retoFijo(m.id,{1:2,2:2,3:0,4:2,5:1,6:0,7:0,8:2}[m.id]),m.tema,400,330);
+  return _vistas[m.id]=imagenLab(retoFijo(m.id,{1:2,2:2,3:0,4:2,5:1,6:2,7:0,8:0}[m.id]),m.tema,400,330);
 }
 
 /* =========================================================
@@ -2423,20 +2423,20 @@ const INTRO = {
     html:`<div class="intro-pz">${piezaMini('R')} ${piezaMini('P')}</div><p>El <b>rey</b> va en cualquier dirección, pero <b>solo una casilla</b>. Nunca puede pisar una casilla <b>amenazada</b> 🔴 (la que ataca una pieza negra).</p>
       <p>El <b>peón</b> solo avanza hacia delante (↑), una casilla (dos en su primer movimiento). <b>Captura en diagonal</b> (↖ ↗). Si llega a la fila 8, ¡corona y se convierte en dama! 👑</p>`,
     botones:[{txt:'¡A por ello!',cls:'btn-ok'}]}),
-  6:()=>modal({titulo:'¡Nuevos bloques: «Si» y «Repetir hasta llegar»!',robot:'sorpresa',cancelable:true,
+  7:()=>modal({titulo:'¡Nuevos bloques: «Si» y «Repetir hasta llegar»!',robot:'sorpresa',cancelable:true,
     html:`<p>Con <b>Si hay peligro</b> el rey mira una casilla antes de moverse. Lo de dentro solo se hace <b>si esa casilla está amenazada</b> 🔴.</p>
       <div class="ejemplo-rep"><div class="col">${contEj('UNT','<span class="etq">Repetir hasta llegar</span>',contEj('IF','<span class="etq">Si hay peligro en</span>'+miniRosaEj(0),bh(mov(1,1),LR)+bh(mov(7,1),LR),130)+bh(mov(0,1),LR),170)}</div></div>
       <p>«Si hay peligro delante, lo rodeo; después, avanzo». <b>Repetir hasta llegar</b> se para solo en la meta. ¡Un solo programa sirve para todo el camino!</p>`,
     botones:[{txt:'¡A por ello!',cls:'btn-ok'}]}),
-  7:()=>modal({titulo:'¡Nuevo bloque: Mi bloque!',robot:'sorpresa',cancelable:true,
+  8:()=>modal({titulo:'¡Nuevo bloque: Mi bloque!',robot:'sorpresa',cancelable:true,
     html:`<p>Tú inventas un bloque. En <b>«Mi bloque hace esto»</b> pones los movimientos de un trozo del recorrido, ¡y después lo usas todas las veces que quieras!</p>
       <div class="ejemplo-rep"><div class="col">${bq('FN')}${bh(sal(0),{pieza:'C'})}${bq('FN')}</div></div>
-      <p>Busca el trozo que se repite en distintos sitios (aunque entre medias haya otros movimientos).</p>`,
+      <p>Busca el trozo que se repite en distintos sitios (aunque entre medias haya otros movimientos). ¡Es el último mundo!</p>`,
     botones:[{txt:'¡Entendido!',cls:'btn-ok'}]}),
-  8:()=>modal({titulo:'Mundo 8: la Dama',robot:'feliz',cancelable:true,
+  6:()=>modal({titulo:'Mundo 6: la Dama',robot:'feliz',cancelable:true,
     html:`<div class="intro-pz">${piezaMini('D')}</div><p>La <b>dama</b> se mueve como la torre <b>y</b> como el alfil: en las 8 direcciones, todas las casillas que quieras.</p>
       <p>Captura las piezas negras <b>de menor a mayor valor</b>: ♟ peón <b>1</b> · ♞ caballo y ♝ alfil <b>3</b> · ♜ torre <b>5</b> · ♛ dama <b>9</b>. Cada pieza lleva su valor en un círculo amarillo.</p>
-      <p>Aquí vale todo lo aprendido. ¡Último mundo!</p>`,
+      <p>Si algún trozo se repite, recuerda que tienes «Repetir».</p>`,
     botones:[{txt:'¡A por ello!',cls:'btn-ok'}]})
 };
 
@@ -2450,10 +2450,10 @@ const BIB=[
  {w:4,tit:'Saltar en L',pz:'C',txt:'El caballo salta 2 casillas en una dirección y 1 hacia un lado. Pasa por encima de cualquier pieza. En la caja, cada flecha apunta a la casilla donde cae.',ej:()=>bh(sal(1),{pieza:'C'})},
  {w:5,tit:'El rey',pz:'R',txt:'Una sola casilla, en cualquier dirección. Nunca a una casilla amenazada 🔴.',ej:()=>bh(mov(1,1),LR)},
  {w:5,i:2,tit:'El peón',pz:'P',txt:'Avanza ↑ (2 casillas solo la primera vez) y captura en diagonal (↖ ↗). En la fila 8 corona 👑.',ej:()=>bh(mov(0,2),LP)+bh(cap(1),LP)},
- {w:6,t:'IF',txt:'El rey mira la casilla que elijas: lo de dentro solo se hace <b>si está amenazada</b> 🔴.',ej:()=>contEj('IF','<span class="etq">Si hay peligro en</span>'+miniRosaEj(0),bh(mov(1,1),LR)+bh(mov(7,1),LR),130)},
- {w:6,t:'UNT',txt:'Repite sin contar las vueltas: se para solo al llegar a la meta.',ej:()=>contEj('UNT','<span class="etq">Repetir hasta llegar</span>',bh(mov(0,1),LR),150)},
- {w:7,t:'FN',txt:'Inventas tu propio bloque con un trozo del recorrido y lo usas todas las veces que quieras.',ej:()=>bq('FN')+bh(sal(0),{pieza:'C'})+bq('FN')},
- {w:8,tit:'La dama',pz:'D',txt:'Recto y en diagonal, todas las casillas que quieras. Captura de menor a mayor valor: 1 · 3 · 5 · 9.',ej:()=>bh(mov(3,4),LD)}
+ {w:6,tit:'La dama',pz:'D',txt:'Recto y en diagonal, todas las casillas que quieras. Captura de menor a mayor valor: 1 · 3 · 5 · 9.',ej:()=>bh(mov(3,4),LD)},
+ {w:7,t:'IF',txt:'El rey mira la casilla que elijas: lo de dentro solo se hace <b>si está amenazada</b> 🔴.',ej:()=>contEj('IF','<span class="etq">Si hay peligro en</span>'+miniRosaEj(0),bh(mov(1,1),LR)+bh(mov(7,1),LR),130)},
+ {w:7,t:'UNT',txt:'Repite sin contar las vueltas: se para solo al llegar a la meta.',ej:()=>contEj('UNT','<span class="etq">Repetir hasta llegar</span>',bh(mov(0,1),LR),150)},
+ {w:8,t:'FN',txt:'Inventas tu propio bloque con un trozo del recorrido y lo usas todas las veces que quieras.',ej:()=>bq('FN')+bh(sal(0),{pieza:'C'})+bq('FN')},
 ];
 function vBiblio(){
   vista.innerHTML=barra('<span class="pill">📚 Biblioteca de bloques</span>')+
@@ -2961,15 +2961,15 @@ const ESTRATEGIA={
      'Busca el camino más corto que esquive las casillas rojas.',
      'El <b>peón</b> avanza ↑ (2 casillas solo la primera vez) y captura en diagonal ↖ ↗.',
      'Si una pieza tapa al peón, captura otra en diagonal para cambiar de columna.'],
-  6:['El camino es siempre igual: <b>avanzar</b>, pero <b>rodear</b> las casillas amenazadas 🔴.',
+  7:['El camino es siempre igual: <b>avanzar</b>, pero <b>rodear</b> las casillas amenazadas 🔴.',
      'Dentro de «Repetir hasta llegar»: primero un <b>«Si hay peligro»</b> que mire la casilla de delante…',
      '…y dentro del «Si», los dos movimientos en diagonal que rodean la casilla roja (ida y vuelta).',
      'Después del «Si» (fuera de él), el movimiento de avanzar.'],
-  7:['Mira las casillas numeradas y busca un trozo de recorrido que salga <b>varias veces igual</b>.',
+  8:['Mira las casillas numeradas y busca un trozo de recorrido que salga <b>varias veces igual</b>.',
      'Pon esos movimientos en «Mi bloque hace esto».',
      'En el programa, usa «Mi bloque» cada vez que aparezca ese trozo.',
      'Lo que cambia entre un trozo y otro va en el programa, entre los «Mi bloque».'],
-  8:['Mira el número amarillo de cada pieza negra: es su <b>valor</b>.',
+  6:['Mira el número amarillo de cada pieza negra: es su <b>valor</b>.',
      'Captura primero la de menor valor y termina con la de mayor.',
      'La dama va recto y en diagonal: busca la línea que lleva a cada pieza.',
      'Ninguna pieza se puede atravesar: si una tapa el camino, rodéala.']
@@ -2983,8 +2983,8 @@ function ejemploAyuda(){
   const n=G.mundo, lab0=G.lab, act=normRef(lab0);
   const base=hashStr('ayuda'+n+'-'+G.modo+'-'+G.idx+'-'+JSON.stringify(lab0.wps)+JSON.stringify(lab0.ini));
   // «Si hay peligro»: el ejemplo rodea por el otro lado, así su programa nunca vale tal cual
-  const sp=n===6&&lab0.S?Object.assign({},lab0.sp,{S:[-lab0.S],D:[0,4]}):lab0.sp;
-  for(let k=0;k<(n===6?5:12);k++){
+  const sp=n===7&&lab0.S?Object.assign({},lab0.sp,{S:[-lab0.S],D:[0,4]}):lab0.sp;
+  for(let k=0;k<(n===7?5:12);k++){
     let lab=null; try{ lab=generar(n,G.idx,mulberry32(base+k*7919),sp); }catch(e){ lab=null; }
     if(!lab||lab.planB) continue;
     if(normRef(lab)===act) continue;
@@ -3186,9 +3186,9 @@ function resaltarPaleta(){ $$('#paleta .blk').forEach(b=>{ b.classList.add('resa
 function pistaConcepto(){
   const n=G.mundo;
   if(n===3&&!usaT('REP')&&G.pistas>=2) return 'Mira las casillas numeradas: hay un trozo de movimientos que se repite. Mételo una vez en «Repetir».';
-  if(n===6&&!usaT('IF')) return 'Prueba con «Repetir hasta llegar» y, dentro, «Si hay peligro» mirando la casilla de delante. Si hay peligro, rodéala en diagonal.';
-  if(n===7&&!usaT('FN')&&G.pistas>=2) return 'Hay un trozo del recorrido que aparece varias veces. Enséñalo una vez en «Mi bloque» y úsalo cada vez que salga.';
-  if(n===7&&usaT('FN')&&!G.fn.length) return '«Mi bloque» está vacío: toca «Mi bloque hace esto» (arriba) y añade los movimientos del trozo que se repite.';
+  if(n===7&&!usaT('IF')) return 'Prueba con «Repetir hasta llegar» y, dentro, «Si hay peligro» mirando la casilla de delante. Si hay peligro, rodéala en diagonal.';
+  if(n===8&&!usaT('FN')&&G.pistas>=2) return 'Hay un trozo del recorrido que aparece varias veces. Enséñalo una vez en «Mi bloque» y úsalo cada vez que salga.';
+  if(n===8&&usaT('FN')&&!G.fn.length) return '«Mi bloque» está vacío: toca «Mi bloque hace esto» (arriba) y añade los movimientos del trozo que se repite.';
   return '';
 }
 function pista(){
